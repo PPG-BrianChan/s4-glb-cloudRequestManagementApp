@@ -1,62 +1,80 @@
+const { executeHttpRequest } = require('@sap-cloud-sdk/http-client');
+const request = require('request');
+const axios = require('axios');
+
 module.exports = (srv) => {
     const { incident } = srv.entities;
 
     srv.before('NEW', 'incident', async (req) => {
-        console.log("Stop here");
-        if(req.data.ticketType_code === 'A'){
+        if (req.data.ticketType_code === 'A') {
             req.data.btpHidden = false
             req.data.fioriHidden = true
-        }else{
+        } else {
             req.data.btpHidden = true
             req.data.fioriHidden = false
         }
     })
 
-    // srv.on('NEW', 'incident', async (req,next) => {
-        // console.log("Stop here");
-        // if(req.data.ticketType_code === 'A'){
-        //     req.data.btpHidden = false
-        // }else{
-        //     req.data.btpHidden = true
-        // }
-        // return next()
-        // if(req.data.ticketType_code === 'A'){
-        //     req.data.btpHidden = false
-        // }else{
-        //     req.data.btpHidden = true
-        // }
-    // })
+    srv.on('READ', 'subaccount', async (req) => {
+        var subaccountList = [];
+        try{
+        await getSubaccountData().then(Response=>{
+            subaccountList = Response;
+            let count = subaccountList.length;
+            Object.assign(subaccountList,{$count:count})
+        });
+        return subaccountList
+        }catch(error){
+            console.log(error);
+        }
+    })
 
-    // srv.before('CREATE', 'customObject', async (req) => {
-    //     console.log("Setting generated values")
-    //     req.data.status_code = 'C'
-    //     let isValid = await validateEntry(req.data,customObject);
-    //     if(!isValid){
-    //         return req.error ({
-    //             code: "KEYS_EXIST",
-    //             message: 'Keys already exist in Database!',
-    //             status: 502
-    //           })
-    //     }
-    // })
+    function getSubaccountData() {
+        return new Promise((resolve, reject) => {
+            let returnData = [];
+            let tokenUrl = 'https://ppgindustriesinc-03.authentication.eu10.hana.ondemand.com/oauth/token';
+            let tokenData = new URLSearchParams();
+            tokenData.append('username', 'cchan@ppg.com');
+            tokenData.append('password', 'Chan123@PPG');
+            tokenData.append('grant_type', 'password');
+    
+            let tokenConfig = {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Basic c2ItdXQtNDJlOWNiOWItODQyYy00ZTU1LWI2MTctZWI3YmM4OTFjZWFjLWNsb25lIWIyNDgwOTJ8Y2lzLWNlbnRyYWwhYjE0OjViMTdkYWNmLTE2NjAtNGNjYi1hZDgzLTAyNGMzYzFkNjc4YyRtOE5wdlZ3eXIyS0lkTzFyblhTdy1mOTVYbktqRk50YS1pSmF4YjhwWlMwPQ==',
+                }
+            };
+    
+            axios.post(tokenUrl, tokenData, tokenConfig)
+                .then(response => {
+                    let token = response.data.access_token;
+                    let serviceUrl = 'https://accounts-service.cfapps.eu10.hana.ondemand.com/accounts/v1/subaccounts?derivedAuthorizations=any';
+                    let serviceConfig = {
+                        headers: {
+                            'Authorization': 'Bearer ' + token
+                        }
+                    }
+                    axios.get(serviceUrl, serviceConfig)
+                        .then(response => {
+                            returnData = response.data.value.map(resultData => {
+                                var subaccount = {};
+                                subaccount.displayName = resultData.displayName;
+                                subaccount.description = resultData.description;
+                                return subaccount;
+                            });
 
-    // srv.on('executeProcess', async (req) => {
-    //     await executeProcess(req, customObject);
-    // })
-
-    // srv.on('updateApprovalStatus', async (req) => {
-    //     await updateApprovalStatus(req, customObject);
-    // })
-
-    // srv.on('completeDeletion', async (req) => {
-    //     await completeDeletion(req, customObject)
-    // })
-
-    // srv.on('PUT', 'excelUpload', async (req) => {
-    //     await massUpload(req,customObject)
-    // })
-
-    // srv.after('READ', 'customObject', async (req, result) => {
-    //     await expandAssociation(req, result, srv);
-    // })
+                            resolve(returnData);
+                        })
+                        .catch(error => {
+                            console.error('An error occurred:', error);
+                            reject(error);
+                        })
+                })
+                .catch(error => {
+                    console.error('An error occurred:', error);
+                    reject(error);
+                });
+        })
+    }
 }
+

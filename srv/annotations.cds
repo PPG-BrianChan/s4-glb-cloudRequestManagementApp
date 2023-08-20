@@ -5,7 +5,8 @@ annotate main.incident with @odata.draft.enabled: true;
 annotate main.incident with {
     ID              @title: '{i18n>ID}'
                     @readonly;
-    ticketNo        @title: '{i18n>ticketNo}';
+    ticketNo        @title: '{i18n>ticketNo}'
+                    @readonly;
     @Core.Immutable:true
     @Common.ValueList: {
         $Type         : 'Common.ValueListType',
@@ -23,10 +24,13 @@ annotate main.incident with {
             }
         ]
     }
+    @Common          : {
+        Text           : ticketType.description,
+        TextArrangement: #TextOnly
+    }
     ticketType      @title: '{i18n>ticketType}';
     description     @title: '{i18n>description}'
                     @readonly;
-    approverid      @title: '{i18n>approverid}';
     @Common.ValueList: {
         $Type         : 'Common.ValueListType',
         Label         : 'Status',
@@ -50,10 +54,28 @@ annotate main.incident with {
     @title           : '{i18n>status}'
     @readonly
     status;
+    @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        Label         : 'Subaccount',
+        CollectionPath: 'subaccount',
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: 'subaccount',
+                ValueListProperty: 'displayName',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'description',
+            }
+        ]
+    }
     subaccount      @title: '{i18n>subaccount}';
     space           @title: '{i18n>space}';
-    roleCollections @title: '{i18n>roleCollections}';
     targetid        @title: '{i18n>targetid}';
+    note            @title: '{i18n>note}'
+                    @UI.MultiLineText: true
+                    @mandatory:fioriHidden;     //Fiori hidden = true = BTP display = Note must be mandatory
     system          @title: '{i18n>system}';
     client          @title: '{i18n>client}';
     createdBy       @title: '{i18n>CreatedBy}';
@@ -67,7 +89,12 @@ annotate main.status with {
         Text           : description,
         TextArrangement: #TextOnly
     }
-    code
+    code        @title: '{i18n>StatusCode}'
+}
+
+annotate main.subaccount with {
+    displayName        @title: '{i18n>SubaccountName}';
+    description        @title: '{i18n>Description}'
 }
 
 annotate main.ticketType with {
@@ -75,7 +102,8 @@ annotate main.ticketType with {
         Text           : description,
         TextArrangement: #TextOnly
     }
-    code
+    code    @title: '{i18n>ticketType}';
+    description @title:'{i18n>Description}'
 }
 
 annotate main.incident with
@@ -84,13 +112,18 @@ annotate main.incident with
         TypeName      : '{i18n>CloudRequestIncident}',
         TypeNamePlural: '{i18n>CloudRequestIncidents}',
         Title         : {Value: '{i18n>CloudRequestIncident}'},
-        Description   : {Value: description}
+        Description   : {Value: ticketNo}
     },
     SelectionFields    : [
         ticketNo,
         ticketType_code,
-        approverid_userid,
         status_code
+    ],
+    HeaderFacets : [
+        {
+            $Type : 'UI.ReferenceFacet',
+            Target : '@UI.FieldGroup#Header',
+        },
     ],
     Facets             : [
         {
@@ -107,16 +140,16 @@ annotate main.incident with
         },
         {
             $Type : 'UI.ReferenceFacet',
-            Label : '{i18n>Admin}',
+            Label : '{i18n>AdminDetails}',
             Target: '@UI.FieldGroup#Admin'
-        }
+        },
     ],
 
     FieldGroup #BTPDetails: {Data: [
         {Value: subaccount},
         {Value: space},
-        {Value: roleCollections},
         {Value: targetid_userid},
+        {Value: note,}
     ]},
 
     FieldGroup #FioriDetails: {Data: [
@@ -132,11 +165,14 @@ annotate main.incident with
         {Value: modifiedAt}
     ]},
 
+    FieldGroup #Header: {Data: [
+        {Value: ticketType_code},
+    ]},
+
     LineItem            : [
         {Value : ticketNo},
         {Value : ticketType_code},
         {Value : description},
-        {Value : approverid_userid},
         {Value : createdBy},
         {Value : createdAt},
         {Value : modifiedBy},
