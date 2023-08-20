@@ -3,11 +3,11 @@ using main from './service';
 annotate main.incident with @odata.draft.enabled: true;
 
 annotate main.incident with {
-    ID              @title: '{i18n>ID}'
-                    @readonly;
-    ticketNo        @title: '{i18n>ticketNo}'
-                    @readonly;
-    @Core.Immutable:true
+    ID          @title           : '{i18n>ID}'
+                @readonly;
+    ticketNo    @title           : '{i18n>ticketNo}'
+                @readonly;
+    @Core.Immutable  : true
     @Common.ValueList: {
         $Type         : 'Common.ValueListType',
         Label         : 'Ticket Type',
@@ -28,9 +28,9 @@ annotate main.incident with {
         Text           : ticketType.description,
         TextArrangement: #TextOnly
     }
-    ticketType      @title: '{i18n>ticketType}';
-    description     @title: '{i18n>description}'
-                    @readonly;
+    ticketType  @title           : '{i18n>ticketType}';
+    description @title           : '{i18n>description}'
+                @readonly;
     @Common.ValueList: {
         $Type         : 'Common.ValueListType',
         Label         : 'Status',
@@ -58,6 +58,7 @@ annotate main.incident with {
         $Type         : 'Common.ValueListType',
         Label         : 'Subaccount',
         CollectionPath: 'subaccount',
+        SearchSupported: false,
         Parameters    : [
             {
                 $Type            : 'Common.ValueListParameterInOut',
@@ -70,73 +71,71 @@ annotate main.incident with {
             }
         ]
     }
-    subaccount      @title: '{i18n>subaccount}';
-    space           @title: '{i18n>space}';
-    targetid        @title: '{i18n>targetid}';
-    note            @title: '{i18n>note}'
-                    @UI.MultiLineText: true
-                    @mandatory:fioriHidden;     //Fiori hidden = true = BTP display = Note must be mandatory
-    system          @title: '{i18n>system}';
-    client          @title: '{i18n>client}';
-    createdBy       @title: '{i18n>CreatedBy}';
-    createdAt       @title: '{i18n>CreatedAt}';
-    modifiedBy      @title: '{i18n>ModifiedBy}';
-    modifiedAt      @title: '{i18n>ModifiedAt}';
+    subaccount  @title           : '{i18n>subaccount}';
+    @readonly
+    space       @title           : '{i18n>space}';
+    @Common.ValueList: {
+        $Type         : 'Common.ValueListType',
+        Label         : 'BTP Users',
+        CollectionPath: 'btpUser',
+        Parameters    : [
+            {
+                $Type            : 'Common.ValueListParameterInOut',
+                LocalDataProperty: 'targetid_email',
+                ValueListProperty: 'email',
+            },
+            {
+                $Type            : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty: 'fullName',
+            }
+        ]
+    }
+    @Common          : {
+        Text           : targetid.fullName,
+        TextArrangement: #TextLast
+    }
+    targetid    @title           : '{i18n>targetid}';
+    note        @title           : '{i18n>note}'
+                @UI.MultiLineText: true
+                @UI.Placeholder : '{i18n>notePlaceHolder}'
+                @mandatory       : fioriHidden; //Fiori hidden = true = BTP display = Note must be mandatory
+    system      @title           : '{i18n>system}';
+    client      @title           : '{i18n>client}';
+    createdBy   @title           : '{i18n>CreatedBy}';
+    createdAt   @title           : '{i18n>CreatedAt}';
+    modifiedBy  @title           : '{i18n>ModifiedBy}';
+    modifiedAt  @title           : '{i18n>ModifiedAt}';
 };
-
-annotate main.status with {
-    @Common: {
-        Text           : description,
-        TextArrangement: #TextOnly
-    }
-    code        @title: '{i18n>StatusCode}'
-}
-
-annotate main.subaccount with {
-    displayName        @title: '{i18n>SubaccountName}';
-    description        @title: '{i18n>Description}'
-}
-
-annotate main.ticketType with {
-    @Common: {
-        Text           : description,
-        TextArrangement: #TextOnly
-    }
-    code    @title: '{i18n>ticketType}';
-    description @title:'{i18n>Description}'
-}
 
 annotate main.incident with
 @UI: {
-    HeaderInfo         : {
+    HeaderInfo              : {
         TypeName      : '{i18n>CloudRequestIncident}',
         TypeNamePlural: '{i18n>CloudRequestIncidents}',
         Title         : {Value: '{i18n>CloudRequestIncident}'},
         Description   : {Value: ticketNo}
     },
-    SelectionFields    : [
+    SelectionFields         : [
         ticketNo,
         ticketType_code,
         status_code
     ],
-    HeaderFacets : [
+    HeaderFacets            : [{
+        $Type : 'UI.ReferenceFacet',
+        Target: '@UI.FieldGroup#Header',
+    }, ],
+    Facets                  : [
         {
-            $Type : 'UI.ReferenceFacet',
-            Target : '@UI.FieldGroup#Header',
-        },
-    ],
-    Facets             : [
-        {
-            $Type : 'UI.ReferenceFacet',
-            Label : '{i18n>BTPDetails}',
-            Target: '@UI.FieldGroup#BTPDetails',
-            ![@UI.Hidden]:btpHidden
+            $Type        : 'UI.ReferenceFacet',
+            Label        : '{i18n>BTPDetails}',
+            Target       : '@UI.FieldGroup#BTPDetails',
+            ![@UI.Hidden]: btpHidden
         },
         {
-            $Type : 'UI.ReferenceFacet',
-            Label : '{i18n>FioriDetails}',
-            Target: '@UI.FieldGroup#FioriDetails',
-            ![@UI.Hidden]:fioriHidden,
+            $Type        : 'UI.ReferenceFacet',
+            Label        : '{i18n>FioriDetails}',
+            Target       : '@UI.FieldGroup#FioriDetails',
+            ![@UI.Hidden]: fioriHidden,
         },
         {
             $Type : 'UI.ReferenceFacet',
@@ -145,11 +144,11 @@ annotate main.incident with
         },
     ],
 
-    FieldGroup #BTPDetails: {Data: [
+    FieldGroup #BTPDetails  : {Data: [
         {Value: subaccount},
         {Value: space},
-        {Value: targetid_userid},
-        {Value: note,}
+        {Value: targetid_email},
+        {Value: note, }
     ]},
 
     FieldGroup #FioriDetails: {Data: [
@@ -157,7 +156,7 @@ annotate main.incident with
         {Value: client}
     ]},
 
-    FieldGroup #Admin  : {Data: [
+    FieldGroup #Admin       : {Data: [
         {Value: ID},
         {Value: createdBy},
         {Value: createdAt},
@@ -165,17 +164,46 @@ annotate main.incident with
         {Value: modifiedAt}
     ]},
 
-    FieldGroup #Header: {Data: [
-        {Value: ticketType_code},
-    ]},
+    FieldGroup #Header      : {Data: [{Value: ticketType_code}, ]},
 
-    LineItem            : [
-        {Value : ticketNo},
-        {Value : ticketType_code},
-        {Value : description},
-        {Value : createdBy},
-        {Value : createdAt},
-        {Value : modifiedBy},
-        {Value : modifiedAt}
+    LineItem                : [
+        {Value: ticketNo},
+        {Value: ticketType_code},
+        {Value: description},
+        {Value: createdBy},
+        {Value: createdAt},
+        {Value: modifiedBy},
+        {Value: modifiedAt}
     ]
 };
+
+annotate main.status with {
+    @Common: {
+        Text           : description,
+        TextArrangement: #TextOnly
+    }
+    code @title: '{i18n>StatusCode}'
+}
+
+annotate main.subaccount with {
+    displayName @title: '{i18n>SubaccountName}';
+    description @title: '{i18n>Description}'
+}
+
+annotate main.ticketType with {
+    @Common: {
+        Text           : description,
+        TextArrangement: #TextOnly
+    }
+    code        @title: '{i18n>ticketType}';
+    description @title: '{i18n>Description}'
+}
+
+annotate main.btpUser with {
+    @Common: {
+        Text           : fullName,
+        TextArrangement: #TextLast
+    }
+    fullName @title: '{i18n>fullName}';
+    email    @title: '{i18n>email}';
+}

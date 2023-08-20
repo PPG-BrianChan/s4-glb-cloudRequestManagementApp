@@ -1,6 +1,6 @@
 const { executeHttpRequest } = require('@sap-cloud-sdk/http-client');
-const request = require('request');
 const axios = require('axios');
+const sorty = require('sorty');
 
 module.exports = (srv) => {
     const { incident } = srv.entities;
@@ -17,15 +17,52 @@ module.exports = (srv) => {
 
     srv.on('READ', 'subaccount', async (req) => {
         var subaccountList = [];
-        try{
-        await getSubaccountData().then(Response=>{
-            subaccountList = Response;
-            let count = subaccountList.length;
-            Object.assign(subaccountList,{$count:count})
-        });
-        return subaccountList
-        }catch(error){
+        try {
+            await getSubaccountData().then(Response => {
+                subaccountList = Response;
+                let count = subaccountList.length;
+                Object.assign(subaccountList, { $count: count })
+            });
+            return subaccountList
+        } catch (error) {
             console.log(error);
+        }
+    })
+
+    srv.on('READ', 'btpUser', async (req) => {
+        let userList = [];
+        try {
+            let initID = 'initial';
+            let nextIterationExist;
+            do {
+                let response = await executeHttpRequest(
+                    {
+                        destinationName: "SCIM_API_Endpoint"
+                    },
+                    {
+                        method: 'GET',
+                        url: `/Users?count=100&startId=${initID}`
+                    }
+                );
+                let tempuserlist = response.data.Resources.map(btpUser => {
+                    let user = {};
+                    user.email = btpUser.emails[0].value;
+                    user.fullName = `${btpUser.name.givenName} ${btpUser.name.familyName}`;
+                    return user;
+                });
+                userList = userList.concat(tempuserlist);
+                initID = response.data.nextId
+                nextIterationExist = !(initID =='end')
+            }
+            while (nextIterationExist)
+            let criteria = [];
+            criteria.push({name:'email',dir:'asc'})
+            sorty(criteria,userList)
+            let count = userList.length;
+            Object.assign(userList,{$count : count});
+            return userList;
+        } catch (error) {
+            console.log(error.message)
         }
     })
 
@@ -37,14 +74,14 @@ module.exports = (srv) => {
             tokenData.append('username', 'cchan@ppg.com');
             tokenData.append('password', 'Chan123@PPG');
             tokenData.append('grant_type', 'password');
-    
+
             let tokenConfig = {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
                     'Authorization': 'Basic c2ItdXQtNDJlOWNiOWItODQyYy00ZTU1LWI2MTctZWI3YmM4OTFjZWFjLWNsb25lIWIyNDgwOTJ8Y2lzLWNlbnRyYWwhYjE0OjViMTdkYWNmLTE2NjAtNGNjYi1hZDgzLTAyNGMzYzFkNjc4YyRtOE5wdlZ3eXIyS0lkTzFyblhTdy1mOTVYbktqRk50YS1pSmF4YjhwWlMwPQ==',
                 }
             };
-    
+
             axios.post(tokenUrl, tokenData, tokenConfig)
                 .then(response => {
                     let token = response.data.access_token;

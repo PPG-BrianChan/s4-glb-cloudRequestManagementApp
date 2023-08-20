@@ -6,6 +6,7 @@ service main {
     entity status     as projection on db.status;
     entity btpUser   as projection on db.btpUser;
     // entity ppgUsers   as projection on db.ppgUsers;
+    @Capabilities.FilterRestrictions.Filterable:false
     entity subaccount as projection on db.subaccount;
     entity ticketType as projection on db.ticketType;
 }
