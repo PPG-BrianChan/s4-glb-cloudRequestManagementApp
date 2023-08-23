@@ -3,10 +3,12 @@ using main from './service';
 annotate main.incident with @odata.draft.enabled: true;
 
 annotate main.incident with {
-    ID          @title           : '{i18n>ID}'
-                @readonly;
-    ticketNo    @title           : '{i18n>ticketNo}'
-                @readonly;
+    ID         @title           : '{i18n>ID}'
+               @readonly;
+    ticketNo   @title           : '{i18n>ticketNo}'
+               @readonly;
+    approverid @title           : '{i18n>approverid}'
+               @readonly;
     @Core.Immutable  : true
     @Common.ValueList: {
         $Type         : 'Common.ValueListType',
@@ -28,9 +30,7 @@ annotate main.incident with {
         Text           : ticketType.description,
         TextArrangement: #TextOnly
     }
-    ticketType  @title           : '{i18n>ticketType}';
-    description @title           : '{i18n>description}'
-                @readonly;
+    ticketType @title           : '{i18n>ticketType}';
     @Common.ValueList: {
         $Type         : 'Common.ValueListType',
         Label         : 'Status',
@@ -55,11 +55,11 @@ annotate main.incident with {
     @readonly
     status;
     @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        Label         : 'Subaccount',
-        CollectionPath: 'subaccount',
+        $Type          : 'Common.ValueListType',
+        Label          : 'Subaccount',
+        CollectionPath : 'subaccount',
         SearchSupported: false,
-        Parameters    : [
+        Parameters     : [
             {
                 $Type            : 'Common.ValueListParameterInOut',
                 LocalDataProperty: 'subaccount',
@@ -71,9 +71,9 @@ annotate main.incident with {
             }
         ]
     }
-    subaccount  @title           : '{i18n>subaccount}';
+    subaccount @title           : '{i18n>subaccount}';
     @readonly
-    space       @title           : '{i18n>space}';
+    space      @title           : '{i18n>space}';
     @Common.ValueList: {
         $Type         : 'Common.ValueListType',
         Label         : 'BTP Users',
@@ -94,17 +94,17 @@ annotate main.incident with {
         Text           : targetid.fullName,
         TextArrangement: #TextLast
     }
-    targetid    @title           : '{i18n>targetid}';
-    note        @title           : '{i18n>note}'
-                @UI.MultiLineText: true
-                @UI.Placeholder : '{i18n>notePlaceHolder}'
-                @mandatory       : fioriHidden; //Fiori hidden = true = BTP display = Note must be mandatory
-    system      @title           : '{i18n>system}';
-    client      @title           : '{i18n>client}';
-    createdBy   @title           : '{i18n>CreatedBy}';
-    createdAt   @title           : '{i18n>CreatedAt}';
-    modifiedBy  @title           : '{i18n>ModifiedBy}';
-    modifiedAt  @title           : '{i18n>ModifiedAt}';
+    targetid   @title           : '{i18n>targetid}';
+    note       @title           : '{i18n>note}'
+               @UI.MultiLineText: true
+               @UI.Placeholder  : '{i18n>notePlaceHolder}'
+               @mandatory       : fioriHidden; //Fiori hidden = true = BTP display = Note must be mandatory
+    system     @title           : '{i18n>system}';
+    client     @title           : '{i18n>client}';
+    createdBy  @title           : '{i18n>CreatedBy}';
+    createdAt  @title           : '{i18n>CreatedAt}';
+    modifiedBy @title           : '{i18n>ModifiedBy}';
+    modifiedAt @title           : '{i18n>ModifiedAt}';
 };
 
 annotate main.incident with
@@ -169,7 +169,6 @@ annotate main.incident with
     LineItem                : [
         {Value: ticketNo},
         {Value: ticketType_code},
-        {Value: description},
         {Value: createdBy},
         {Value: createdAt},
         {Value: modifiedBy},

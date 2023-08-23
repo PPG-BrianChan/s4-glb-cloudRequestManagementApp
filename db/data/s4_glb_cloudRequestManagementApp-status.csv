@@ -2,4 +2,5 @@ code;description
 O;Open
 A;Approved
 R;Rejected
-C;Released
+C;Confirmed
+S;Sent For Approval

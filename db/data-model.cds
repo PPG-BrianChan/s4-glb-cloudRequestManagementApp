@@ -8,7 +8,6 @@ using {
 entity incident : cuid, managed {
     ticketNo    : String(8);
     ticketType  : Association to ticketType;
-    description : String;
     approverid  : String; //Not needed, request should be sent to BTP Admin Group! Update from workflow! READ ONLY!
     status      : Association to one status;
     //Subaccount Information

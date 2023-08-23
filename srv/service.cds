@@ -10,3 +10,7 @@ service main {
     entity subaccount as projection on db.subaccount;
     entity ticketType as projection on db.ticketType;
 }
+
+service api {
+    action updateApprovalStatus(objectID : String, decision : String, Space :String);
+}
