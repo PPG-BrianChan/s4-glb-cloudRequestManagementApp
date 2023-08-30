@@ -2,7 +2,9 @@ using s4_glb_cloudRequestManagementApp as db from '../db/data-model';
 
 service main {
     @Capabilities.Insertable: true
-    entity incident   as projection on db.incident;
+    entity incident   as projection on db.incident actions{
+        action completeIncident();
+    };
     entity status     as projection on db.status;
     entity btpUser   as projection on db.btpUser;
     // entity ppgUsers   as projection on db.ppgUsers;
@@ -12,5 +14,6 @@ service main {
 }
 
 service api {
-    action updateApprovalStatus(objectID : String, decision : String, Space :String);
+    entity incident   as projection on db.incident;
+    action updateApprovalStatus(objectID : String, decision : String, space :String);
 }

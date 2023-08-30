@@ -74,26 +74,26 @@ annotate main.incident with {
     subaccount @title           : '{i18n>subaccount}';
     @readonly
     space      @title           : '{i18n>space}';
-    @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        Label         : 'BTP Users',
-        CollectionPath: 'btpUser',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: 'targetid_email',
-                ValueListProperty: 'email',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'fullName',
-            }
-        ]
-    }
-    @Common          : {
-        Text           : targetid.fullName,
-        TextArrangement: #TextLast
-    }
+    // @Common.ValueList: {
+    //     $Type         : 'Common.ValueListType',
+    //     Label         : 'BTP Users',
+    //     CollectionPath: 'btpUser',
+    //     Parameters    : [
+    //         {
+    //             $Type            : 'Common.ValueListParameterInOut',
+    //             LocalDataProperty: 'targetid_email',
+    //             ValueListProperty: 'email',
+    //         },
+    //         {
+    //             $Type            : 'Common.ValueListParameterDisplayOnly',
+    //             ValueListProperty: 'fullName',
+    //         }
+    //     ]
+    // }
+    // @Common          : {
+    //     Text           : targetid.fullName,
+    //     TextArrangement: #TextLast
+    // }
     targetid   @title           : '{i18n>targetid}';
     note       @title           : '{i18n>note}'
                @UI.MultiLineText: true
@@ -164,9 +164,17 @@ annotate main.incident with
         {Value: modifiedAt}
     ]},
 
-    FieldGroup #Header      : {Data: [{Value: ticketType_code}, ]},
+    FieldGroup #Header      : {Data: [
+        {Value: ticketType_code},
+        {Value: status_code}
+    ]},
 
     LineItem                : [
+        {
+            $Type  : 'UI.DataFieldForAction',
+            Action : 'main.completeIncident',
+            Label  : 'Confirm Incident'
+        },
         {Value: ticketNo},
         {Value: ticketType_code},
         {Value: createdBy},

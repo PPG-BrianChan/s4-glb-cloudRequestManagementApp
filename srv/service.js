@@ -2,6 +2,9 @@ const insertDefaultValues = require('./libs/insertDefaultValues.js');
 const getBTPUsers = require('./libs/getBTPUsers.js');
 const getSubaccountList = require('./libs/getSubaccountList.js');
 const updateApprovalStatus = require('./libs/updateApprovalStatus.js');
+const executeProcess = require('./libs/executeProcess.js');
+const sendMail = require('./libs/sendMail.js');
+const completeIncident = require('./libs/completeIncident.js');
 
 module.exports = (srv) => {
     const { incident } = srv.entities;
@@ -21,9 +24,9 @@ module.exports = (srv) => {
     })
 
     srv.after('CREATE', 'incident', async (req) => {
-        //Send WF
+        await executeProcess(req,incident);
 
-        //Send email
+        await sendMail('approval',req,'cchan@ppg.com');
     })
 
     srv.on('READ', 'subaccount', async (req) => {
@@ -37,7 +40,11 @@ module.exports = (srv) => {
     })
 
     srv.on('updateApprovalStatus', async(req) =>{
-        await updateApprovalStatus(req, incident);
+        await updateApprovalStatus(req, incident); 
+    })
+
+    srv.on('completeIncident',async(req)=>{
+        await completeIncident(req,incident)
     })
 }
 
