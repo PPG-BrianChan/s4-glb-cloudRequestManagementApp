@@ -19,7 +19,7 @@ modules:
 - name: s4-glb-cloudRequestManagementApp-destination-content
   type: com.sap.application.content
   requires:
-  - name: s4-glb-cloudRequestManagementApp-destination-service
+  - name: s4-glb-cloudReqMgmt-destination-service
     parameters:
       content-target: true
   - name: s4-glb-cloudRequestManagementApp_html_repo_host
@@ -35,7 +35,7 @@ modules:
       instance:
         destinations:
         - Name: s4_glb_cloudRequestManagementApp_approuter_s4_glb_cloudRequestManagementApp_html_repo_host
-          ServiceInstanceName: s4-glb-cloudRequestManagementApp-html5-app-host-service
+          ServiceInstanceName: s4-glb-cloudReqMgmt-html5-app-host-service
           ServiceKeyName: s4-glb-cloudRequestManagementApp_html_repo_host-key
           sap.cloud.service: s4-glb-cloudRequestManagementApp-approuter
         - Authentication: OAuth2UserTokenExchange
@@ -71,7 +71,7 @@ modules:
     - npm run build:cf
     supported-platforms: []
 resources:
-- name: s4-glb-cloudRequestManagementApp-destination-service
+- name: s4-glb-cloudReqMgmt-destination-service
   type: org.cloudfoundry.managed-service
   parameters:
     config:
@@ -94,7 +94,7 @@ resources:
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
-    service-name: s4-glb-cloudRequestManagementApp-destination-service
+    service-name: s4-glb-cloudReqMgmt-destination-service
     service-plan: lite
   requires:
   - name: srv-api
@@ -102,7 +102,7 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     service: html5-apps-repo
-    service-name: s4-glb-cloudRequestManagementApp-html5-app-host-service
+    service-name: s4-glb-cloudReqMgmt-html5-app-host-service
     service-plan: app-host
 - name: uaa_s4-glb-cloudRequestManagementApp
   type: org.cloudfoundry.managed-service
