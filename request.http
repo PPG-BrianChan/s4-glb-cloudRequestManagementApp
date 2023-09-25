@@ -2,7 +2,7 @@ POST http://localhost:4004/api/updateApprovalStatus
 Content-Type: application/json
 
 {
-    "objectID" : "db1a3ac0-f060-4a7b-be32-b49141bfa83b",
-    "decision" : "Reject",
-    "space"    : "MDM"
+    "objectID" : "e22ee563-ebf2-42d1-b817-79c05a06bc25",
+    "decision" : "Approve",
+    "space"    : "DTR,OTC"
 }
