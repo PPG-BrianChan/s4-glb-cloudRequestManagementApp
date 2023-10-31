@@ -1,5 +1,5 @@
 const { executeHttpRequest } = require('@sap-cloud-sdk/http-client');
-const definitionId = "eu10.crossfunctional-dev-56c89xus.s4glbbtpaccessrequestprocess.btpAccessRequestApprovalProcess"
+const definitionId = "eu10.s4-dev-7ydmdsrh.s4glbbtpaccessrequestprocess.btpAccessRequestApprovalProcess"
 
 module.exports = async function (req, entity) {
     console.log("Executing SBPA");
@@ -17,14 +17,14 @@ module.exports = async function (req, entity) {
             "approve": "Approve",
             "reject": "Reject",
             "objectguid": req.ID,
-            "approvergroup": "cchan@ppg.com"
+            "approvergroup": "PPG_SAP_BTP_ADMIN"
         }
     }
     
     try {
         const result = await executeHttpRequest(
             {
-                destinationName: 'SBPA-Process_Trigger_Destination'
+                destinationName: 'spa_process_trigger_destination'
             },
             {
                 method: 'POST',

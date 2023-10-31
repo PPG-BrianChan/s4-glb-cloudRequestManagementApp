@@ -6,7 +6,7 @@
     "version": ""
   },
   "x-sap-api-type": "ODATAV4",
-  "x-odata-version": "4.0",
+  "x-odata-version": "4.01",
   "x-sap-shortText": "Service for namespace main",
   "servers": [
     {
@@ -33,7 +33,7 @@
   "paths": {
     "/$batch": {
       "post": {
-        "summary": "Send a group of requests",
+        "summary": "Sends a group of requests",
         "description": "Group multiple requests into a single request payload, see [Batch Requests](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_BatchRequests).\n\n*Please note that \"Try it out\" is not supported for this request.*",
         "tags": [
           "Batch Requests"
@@ -70,7 +70,7 @@
     },
     "/btpUser": {
       "get": {
-        "summary": "Retrieve a list of btp user.",
+        "summary": "Retrieves a list of btp user.",
         "tags": [
           "btpUser"
         ],
@@ -85,7 +85,7 @@
             "$ref": "#/components/parameters/search"
           },
           {
-            "name": "$filter",
+            "name": "filter",
             "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
             "in": "query",
             "schema": {
@@ -96,7 +96,7 @@
             "$ref": "#/components/parameters/count"
           },
           {
-            "name": "$orderby",
+            "name": "orderby",
             "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
             "in": "query",
             "explode": false,
@@ -115,7 +115,7 @@
             }
           },
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -141,7 +141,7 @@
                   "type": "object",
                   "title": "Collection of btpUser",
                   "properties": {
-                    "@odata.count": {
+                    "@count": {
                       "$ref": "#/components/schemas/count"
                     },
                     "value": {
@@ -161,7 +161,7 @@
         }
       },
       "post": {
-        "summary": "Create a single btp user.",
+        "summary": "Creates a single btp user.",
         "tags": [
           "btpUser"
         ],
@@ -206,13 +206,13 @@
         }
       ],
       "get": {
-        "summary": "Retrieve a single btp user.",
+        "summary": "Retrieves a single btp user.",
         "tags": [
           "btpUser"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -246,7 +246,7 @@
         }
       },
       "patch": {
-        "summary": "Change a single btp user.",
+        "summary": "Changes a single btp user.",
         "tags": [
           "btpUser"
         ],
@@ -271,7 +271,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a single btp user.",
+        "summary": "Deletes a single btp user.",
         "tags": [
           "btpUser"
         ],
@@ -287,7 +287,7 @@
     },
     "/incident": {
       "get": {
-        "summary": "Retrieve a list of incident.",
+        "summary": "Retrieves a list of incident.",
         "tags": [
           "incident"
         ],
@@ -302,7 +302,7 @@
             "$ref": "#/components/parameters/search"
           },
           {
-            "name": "$filter",
+            "name": "filter",
             "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
             "in": "query",
             "schema": {
@@ -313,7 +313,7 @@
             "$ref": "#/components/parameters/count"
           },
           {
-            "name": "$orderby",
+            "name": "orderby",
             "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
             "in": "query",
             "explode": false,
@@ -368,7 +368,7 @@
             }
           },
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -403,7 +403,7 @@
             }
           },
           {
-            "name": "$expand",
+            "name": "expand",
             "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
             "in": "query",
             "explode": false,
@@ -433,7 +433,7 @@
                   "type": "object",
                   "title": "Collection of incident",
                   "properties": {
-                    "@odata.count": {
+                    "@count": {
                       "$ref": "#/components/schemas/count"
                     },
                     "value": {
@@ -453,7 +453,7 @@
         }
       },
       "post": {
-        "summary": "Create a single incident.",
+        "summary": "Creates a single incident.",
         "tags": [
           "incident"
         ],
@@ -510,13 +510,13 @@
         }
       ],
       "get": {
-        "summary": "Retrieve a single incident.",
+        "summary": "Retrieves a single incident.",
         "tags": [
           "incident"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -551,7 +551,7 @@
             }
           },
           {
-            "name": "$expand",
+            "name": "expand",
             "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
             "in": "query",
             "explode": false,
@@ -589,7 +589,7 @@
         }
       },
       "patch": {
-        "summary": "Change a single incident.",
+        "summary": "Changes a single incident.",
         "tags": [
           "incident"
         ],
@@ -614,7 +614,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a single incident.",
+        "summary": "Deletes a single incident.",
         "tags": [
           "incident"
         ],
@@ -653,13 +653,13 @@
         }
       ],
       "get": {
-        "summary": "Retrieve draft administrative data of a incident.",
+        "summary": "Retrieves draft administrative data of a incident.",
         "tags": [
           "incident"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -699,7 +699,7 @@
         }
       },
       "patch": {
-        "summary": "Change draft administrative data of a incident.",
+        "summary": "Changes draft administrative data of a incident.",
         "tags": [
           "incident"
         ],
@@ -724,7 +724,7 @@
         }
       },
       "delete": {
-        "summary": "Delete draft administrative data of a incident.",
+        "summary": "Deletes draft administrative data of a incident.",
         "tags": [
           "incident"
         ],
@@ -763,13 +763,13 @@
         }
       ],
       "get": {
-        "summary": "Retrieve sibling entity of a incident.",
+        "summary": "Retrieves sibling entity of a incident.",
         "tags": [
           "incident"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -804,7 +804,7 @@
             }
           },
           {
-            "name": "$expand",
+            "name": "expand",
             "description": "The value of $expand query option is a comma-separated list of navigation property names, stream property names, or $value indicating the stream content of a media-entity. The corresponding related entities and stream values will be represented inline, see [Expand](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionexpand)",
             "in": "query",
             "explode": false,
@@ -842,9 +842,48 @@
         }
       }
     },
+    "/incident(ID={ID},IsActiveEntity='{IsActiveEntity}')/SiblingEntity/main.completeIncident": {
+      "post": {
+        "summary": "Invokes action completeIncident",
+        "tags": [
+          "incident"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [
+          {
+            "description": "key: ID",
+            "in": "path",
+            "name": "ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "01234567-89ab-cdef-0123-456789abcdef"
+            }
+          },
+          {
+            "description": "key: IsActiveEntity",
+            "in": "path",
+            "name": "IsActiveEntity",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ]
+      }
+    },
     "/incident(ID={ID},IsActiveEntity='{IsActiveEntity}')/SiblingEntity/main.draftActivate": {
       "post": {
-        "summary": "Invoke action draftActivate",
+        "summary": "Invokes action draftActivate",
         "tags": [
           "incident"
         ],
@@ -895,7 +934,7 @@
     },
     "/incident(ID={ID},IsActiveEntity='{IsActiveEntity}')/SiblingEntity/main.draftEdit": {
       "post": {
-        "summary": "Invoke action draftEdit",
+        "summary": "Invokes action draftEdit",
         "tags": [
           "incident"
         ],
@@ -962,7 +1001,7 @@
     },
     "/incident(ID={ID},IsActiveEntity='{IsActiveEntity}')/SiblingEntity/main.draftPrepare": {
       "post": {
-        "summary": "Invoke action draftPrepare",
+        "summary": "Invokes action draftPrepare",
         "tags": [
           "incident"
         ],
@@ -1027,9 +1066,48 @@
         }
       }
     },
+    "/incident(ID={ID},IsActiveEntity='{IsActiveEntity}')/main.completeIncident": {
+      "post": {
+        "summary": "Invokes action completeIncident",
+        "tags": [
+          "incident"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        },
+        "parameters": [
+          {
+            "description": "key: ID",
+            "in": "path",
+            "name": "ID",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "example": "01234567-89ab-cdef-0123-456789abcdef"
+            }
+          },
+          {
+            "description": "key: IsActiveEntity",
+            "in": "path",
+            "name": "IsActiveEntity",
+            "required": true,
+            "schema": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        ]
+      }
+    },
     "/incident(ID={ID},IsActiveEntity='{IsActiveEntity}')/main.draftActivate": {
       "post": {
-        "summary": "Invoke action draftActivate",
+        "summary": "Invokes action draftActivate",
         "tags": [
           "incident"
         ],
@@ -1080,7 +1158,7 @@
     },
     "/incident(ID={ID},IsActiveEntity='{IsActiveEntity}')/main.draftEdit": {
       "post": {
-        "summary": "Invoke action draftEdit",
+        "summary": "Invokes action draftEdit",
         "tags": [
           "incident"
         ],
@@ -1147,7 +1225,7 @@
     },
     "/incident(ID={ID},IsActiveEntity='{IsActiveEntity}')/main.draftPrepare": {
       "post": {
-        "summary": "Invoke action draftPrepare",
+        "summary": "Invokes action draftPrepare",
         "tags": [
           "incident"
         ],
@@ -1237,14 +1315,14 @@
         }
       ],
       "get": {
-        "summary": "Retrieve status of a incident.",
+        "summary": "Retrieves status of a incident.",
         "tags": [
           "incident",
           "status"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -1303,14 +1381,14 @@
         }
       ],
       "get": {
-        "summary": "Retrieve targetid of a incident.",
+        "summary": "Retrieves targetid of a incident.",
         "tags": [
           "incident",
           "btpUser"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -1369,14 +1447,14 @@
         }
       ],
       "get": {
-        "summary": "Retrieve ticket type of a incident.",
+        "summary": "Retrieves ticket type of a incident.",
         "tags": [
           "incident",
           "ticketType"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -1412,7 +1490,7 @@
     },
     "/status": {
       "get": {
-        "summary": "Retrieve a list of status.",
+        "summary": "Retrieves a list of status.",
         "tags": [
           "status"
         ],
@@ -1427,7 +1505,7 @@
             "$ref": "#/components/parameters/search"
           },
           {
-            "name": "$filter",
+            "name": "filter",
             "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
             "in": "query",
             "schema": {
@@ -1438,7 +1516,7 @@
             "$ref": "#/components/parameters/count"
           },
           {
-            "name": "$orderby",
+            "name": "orderby",
             "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
             "in": "query",
             "explode": false,
@@ -1457,7 +1535,7 @@
             }
           },
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -1483,7 +1561,7 @@
                   "type": "object",
                   "title": "Collection of status",
                   "properties": {
-                    "@odata.count": {
+                    "@count": {
                       "$ref": "#/components/schemas/count"
                     },
                     "value": {
@@ -1503,7 +1581,7 @@
         }
       },
       "post": {
-        "summary": "Create a single status.",
+        "summary": "Creates a single status.",
         "tags": [
           "status"
         ],
@@ -1549,13 +1627,13 @@
         }
       ],
       "get": {
-        "summary": "Retrieve a single status.",
+        "summary": "Retrieves a single status.",
         "tags": [
           "status"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -1589,7 +1667,7 @@
         }
       },
       "patch": {
-        "summary": "Change a single status.",
+        "summary": "Changes a single status.",
         "tags": [
           "status"
         ],
@@ -1614,7 +1692,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a single status.",
+        "summary": "Deletes a single status.",
         "tags": [
           "status"
         ],
@@ -1630,7 +1708,7 @@
     },
     "/subaccount": {
       "get": {
-        "summary": "Retrieve a list of subaccount.",
+        "summary": "Retrieves a list of subaccount.",
         "tags": [
           "subaccount"
         ],
@@ -1648,7 +1726,7 @@
             "$ref": "#/components/parameters/count"
           },
           {
-            "name": "$orderby",
+            "name": "orderby",
             "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
             "in": "query",
             "explode": false,
@@ -1667,7 +1745,7 @@
             }
           },
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -1693,7 +1771,7 @@
                   "type": "object",
                   "title": "Collection of subaccount",
                   "properties": {
-                    "@odata.count": {
+                    "@count": {
                       "$ref": "#/components/schemas/count"
                     },
                     "value": {
@@ -1713,7 +1791,7 @@
         }
       },
       "post": {
-        "summary": "Create a single subaccount.",
+        "summary": "Creates a single subaccount.",
         "tags": [
           "subaccount"
         ],
@@ -1758,13 +1836,13 @@
         }
       ],
       "get": {
-        "summary": "Retrieve a single subaccount.",
+        "summary": "Retrieves a single subaccount.",
         "tags": [
           "subaccount"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -1798,7 +1876,7 @@
         }
       },
       "patch": {
-        "summary": "Change a single subaccount.",
+        "summary": "Changes a single subaccount.",
         "tags": [
           "subaccount"
         ],
@@ -1823,7 +1901,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a single subaccount.",
+        "summary": "Deletes a single subaccount.",
         "tags": [
           "subaccount"
         ],
@@ -1839,7 +1917,7 @@
     },
     "/ticketType": {
       "get": {
-        "summary": "Retrieve a list of ticket type.",
+        "summary": "Retrieves a list of ticket type.",
         "tags": [
           "ticketType"
         ],
@@ -1854,7 +1932,7 @@
             "$ref": "#/components/parameters/search"
           },
           {
-            "name": "$filter",
+            "name": "filter",
             "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
             "in": "query",
             "schema": {
@@ -1865,7 +1943,7 @@
             "$ref": "#/components/parameters/count"
           },
           {
-            "name": "$orderby",
+            "name": "orderby",
             "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
             "in": "query",
             "explode": false,
@@ -1884,7 +1962,7 @@
             }
           },
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -1910,7 +1988,7 @@
                   "type": "object",
                   "title": "Collection of ticketType",
                   "properties": {
-                    "@odata.count": {
+                    "@count": {
                       "$ref": "#/components/schemas/count"
                     },
                     "value": {
@@ -1930,7 +2008,7 @@
         }
       },
       "post": {
-        "summary": "Create a single ticket type.",
+        "summary": "Creates a single ticket type.",
         "tags": [
           "ticketType"
         ],
@@ -1976,13 +2054,13 @@
         }
       ],
       "get": {
-        "summary": "Retrieve a single ticket type.",
+        "summary": "Retrieves a single ticket type.",
         "tags": [
           "ticketType"
         ],
         "parameters": [
           {
-            "name": "$select",
+            "name": "select",
             "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
             "in": "query",
             "explode": false,
@@ -2016,7 +2094,7 @@
         }
       },
       "patch": {
-        "summary": "Change a single ticket type.",
+        "summary": "Changes a single ticket type.",
         "tags": [
           "ticketType"
         ],
@@ -2041,7 +2119,7 @@
         }
       },
       "delete": {
-        "summary": "Delete a single ticket type.",
+        "summary": "Deletes a single ticket type.",
         "tags": [
           "ticketType"
         ],
@@ -2668,7 +2746,7 @@
     },
     "parameters": {
       "top": {
-        "name": "$top",
+        "name": "top",
         "in": "query",
         "description": "Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop)",
         "schema": {
@@ -2678,7 +2756,7 @@
         "example": 50
       },
       "skip": {
-        "name": "$skip",
+        "name": "skip",
         "in": "query",
         "description": "Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip)",
         "schema": {
@@ -2687,7 +2765,7 @@
         }
       },
       "count": {
-        "name": "$count",
+        "name": "count",
         "in": "query",
         "description": "Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount)",
         "schema": {
@@ -2695,7 +2773,7 @@
         }
       },
       "search": {
-        "name": "$search",
+        "name": "search",
         "in": "query",
         "description": "Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch)",
         "schema": {

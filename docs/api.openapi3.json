@@ -6,18 +6,22 @@
     "version": ""
   },
   "x-sap-api-type": "ODATAV4",
-  "x-odata-version": "4.0",
+  "x-odata-version": "4.01",
   "x-sap-shortText": "Service for namespace api",
   "servers": [
     {
       "url": "/odata/v4/api"
     }
   ],
-  "tags": [],
+  "tags": [
+    {
+      "name": "incident"
+    }
+  ],
   "paths": {
     "/$batch": {
       "post": {
-        "summary": "Send a group of requests",
+        "summary": "Sends a group of requests",
         "description": "Group multiple requests into a single request payload, see [Batch Requests](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_BatchRequests).\n\n*Please note that \"Try it out\" is not supported for this request.*",
         "tags": [
           "Batch Requests"
@@ -30,7 +34,7 @@
               "schema": {
                 "type": "string"
               },
-              "example": "--request-separator\nContent-Type: application/http\nContent-Transfer-Encoding: binary\n\nGET undefined HTTP/1.1\nAccept: application/json\n\n\n--request-separator--"
+              "example": "--request-separator\nContent-Type: application/http\nContent-Transfer-Encoding: binary\n\nGET incident HTTP/1.1\nAccept: application/json\n\n\n--request-separator--"
             }
           }
         },
@@ -52,9 +56,288 @@
         }
       }
     },
+    "/incident": {
+      "get": {
+        "summary": "Retrieves a list of incident.",
+        "tags": [
+          "incident"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/top"
+          },
+          {
+            "$ref": "#/components/parameters/skip"
+          },
+          {
+            "$ref": "#/components/parameters/search"
+          },
+          {
+            "name": "filter",
+            "description": "Filter items by property values, see [Filtering](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionfilter)",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/count"
+          },
+          {
+            "name": "orderby",
+            "description": "Order items by property values, see [Sorting](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionorderby)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ID",
+                  "ID desc",
+                  "createdAt",
+                  "createdAt desc",
+                  "createdBy",
+                  "createdBy desc",
+                  "modifiedAt",
+                  "modifiedAt desc",
+                  "modifiedBy",
+                  "modifiedBy desc",
+                  "ticketNo",
+                  "ticketNo desc",
+                  "ticketType_code",
+                  "ticketType_code desc",
+                  "approverid",
+                  "approverid desc",
+                  "status_code",
+                  "status_code desc",
+                  "subaccount",
+                  "subaccount desc",
+                  "space",
+                  "space desc",
+                  "targetid_email",
+                  "targetid_email desc",
+                  "note",
+                  "note desc",
+                  "system",
+                  "system desc",
+                  "client",
+                  "client desc",
+                  "btpHidden",
+                  "btpHidden desc",
+                  "fioriHidden",
+                  "fioriHidden desc"
+                ]
+              }
+            }
+          },
+          {
+            "name": "select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ID",
+                  "createdAt",
+                  "createdBy",
+                  "modifiedAt",
+                  "modifiedBy",
+                  "ticketNo",
+                  "ticketType_code",
+                  "approverid",
+                  "status_code",
+                  "subaccount",
+                  "space",
+                  "targetid_email",
+                  "note",
+                  "system",
+                  "client",
+                  "btpHidden",
+                  "fioriHidden"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved incident",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "title": "Collection of incident",
+                  "properties": {
+                    "@count": {
+                      "$ref": "#/components/schemas/count"
+                    },
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/api.incident"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Creates a single incident.",
+        "tags": [
+          "incident"
+        ],
+        "requestBody": {
+          "description": "New incident",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api.incident-create"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created incident",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api.incident"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
+    "/incident({ID})": {
+      "parameters": [
+        {
+          "description": "key: ID",
+          "in": "path",
+          "name": "ID",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Retrieves a single incident.",
+        "tags": [
+          "incident"
+        ],
+        "parameters": [
+          {
+            "name": "select",
+            "description": "Select properties to be returned, see [Select](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionselect)",
+            "in": "query",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ID",
+                  "createdAt",
+                  "createdBy",
+                  "modifiedAt",
+                  "modifiedBy",
+                  "ticketNo",
+                  "ticketType_code",
+                  "approverid",
+                  "status_code",
+                  "subaccount",
+                  "space",
+                  "targetid_email",
+                  "note",
+                  "system",
+                  "client",
+                  "btpHidden",
+                  "fioriHidden"
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Retrieved incident",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/api.incident"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Changes a single incident.",
+        "tags": [
+          "incident"
+        ],
+        "requestBody": {
+          "description": "New property values",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/api.incident-update"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a single incident.",
+        "tags": [
+          "incident"
+        ],
+        "responses": {
+          "204": {
+            "description": "Success"
+          },
+          "4XX": {
+            "$ref": "#/components/responses/error"
+          }
+        }
+      }
+    },
     "/updateApprovalStatus": {
       "post": {
-        "summary": "Invoke action updateApprovalStatus",
+        "summary": "Invokes action updateApprovalStatus",
         "tags": [
           "Service Operations"
         ],
@@ -81,7 +364,7 @@
                     "type": "string",
                     "nullable": true
                   },
-                  "Space": {
+                  "space": {
                     "type": "string",
                     "nullable": true
                   }
@@ -95,6 +378,220 @@
   },
   "components": {
     "schemas": {
+      "api.incident": {
+        "title": "incident",
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true,
+            "description": "{i18n>UserID.Description}"
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2017-04-13T15:51:04.0000000Z",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "maxLength": 255,
+            "nullable": true,
+            "description": "{i18n>UserID.Description}"
+          },
+          "ticketNo": {
+            "type": "string",
+            "maxLength": 8,
+            "nullable": true
+          },
+          "ticketType_code": {
+            "type": "string",
+            "maxLength": 1,
+            "nullable": true
+          },
+          "approverid": {
+            "type": "string",
+            "nullable": true
+          },
+          "status_code": {
+            "type": "string",
+            "maxLength": 1,
+            "nullable": true
+          },
+          "subaccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "space": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetid_email": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "system": {
+            "type": "string",
+            "maxLength": 3,
+            "nullable": true
+          },
+          "client": {
+            "type": "string",
+            "maxLength": 3,
+            "nullable": true
+          },
+          "btpHidden": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "fioriHidden": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
+      "api.incident-create": {
+        "title": "incident (for create)",
+        "type": "object",
+        "properties": {
+          "ID": {
+            "type": "string",
+            "format": "uuid",
+            "example": "01234567-89ab-cdef-0123-456789abcdef"
+          },
+          "ticketNo": {
+            "type": "string",
+            "maxLength": 8,
+            "nullable": true
+          },
+          "ticketType_code": {
+            "type": "string",
+            "maxLength": 1,
+            "nullable": true
+          },
+          "approverid": {
+            "type": "string",
+            "nullable": true
+          },
+          "status_code": {
+            "type": "string",
+            "maxLength": 1,
+            "nullable": true
+          },
+          "subaccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "space": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetid_email": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "system": {
+            "type": "string",
+            "maxLength": 3,
+            "nullable": true
+          },
+          "client": {
+            "type": "string",
+            "maxLength": 3,
+            "nullable": true
+          },
+          "btpHidden": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "fioriHidden": {
+            "type": "boolean",
+            "nullable": true
+          }
+        },
+        "required": [
+          "ID"
+        ]
+      },
+      "api.incident-update": {
+        "title": "incident (for update)",
+        "type": "object",
+        "properties": {
+          "ticketNo": {
+            "type": "string",
+            "maxLength": 8,
+            "nullable": true
+          },
+          "ticketType_code": {
+            "type": "string",
+            "maxLength": 1,
+            "nullable": true
+          },
+          "approverid": {
+            "type": "string",
+            "nullable": true
+          },
+          "status_code": {
+            "type": "string",
+            "maxLength": 1,
+            "nullable": true
+          },
+          "subaccount": {
+            "type": "string",
+            "nullable": true
+          },
+          "space": {
+            "type": "string",
+            "nullable": true
+          },
+          "targetid_email": {
+            "type": "string",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "system": {
+            "type": "string",
+            "maxLength": 3,
+            "nullable": true
+          },
+          "client": {
+            "type": "string",
+            "maxLength": 3,
+            "nullable": true
+          },
+          "btpHidden": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "fioriHidden": {
+            "type": "boolean",
+            "nullable": true
+          }
+        }
+      },
       "count": {
         "anyOf": [
           {
@@ -160,7 +657,7 @@
     },
     "parameters": {
       "top": {
-        "name": "$top",
+        "name": "top",
         "in": "query",
         "description": "Show only the first n items, see [Paging - Top](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptiontop)",
         "schema": {
@@ -170,7 +667,7 @@
         "example": 50
       },
       "skip": {
-        "name": "$skip",
+        "name": "skip",
         "in": "query",
         "description": "Skip the first n items, see [Paging - Skip](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionskip)",
         "schema": {
@@ -179,7 +676,7 @@
         }
       },
       "count": {
-        "name": "$count",
+        "name": "count",
         "in": "query",
         "description": "Include count of items, see [Count](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptioncount)",
         "schema": {
@@ -187,7 +684,7 @@
         }
       },
       "search": {
-        "name": "$search",
+        "name": "search",
         "in": "query",
         "description": "Search items by search phrases, see [Searching](http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#sec_SystemQueryOptionsearch)",
         "schema": {

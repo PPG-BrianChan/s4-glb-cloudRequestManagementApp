@@ -26,7 +26,7 @@ module.exports = (srv) => {
     srv.after('CREATE', 'incident', async (req) => {
         await executeProcess(req,incident);
 
-        await sendMail('approval',req,'cchan@ppg.com');
+        await sendMail('approval',req,'SAPCOEBTPAdmin@ppg.com');
     })
 
     srv.on('READ', 'subaccount', async (req) => {

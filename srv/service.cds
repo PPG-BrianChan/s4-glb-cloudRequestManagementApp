@@ -3,19 +3,19 @@ using s4_glb_cloudRequestManagementApp as db from '../db/data-model';
 service main{
     @Capabilities.Insertable: true
     @Capabilities.Deletable : true
-    @(restrict: [
-        {
-            grant: '*',
-            to   : 'admin'
-        },
-        {
-            grant: [
-                'READ',
-                'CREATE'
-            ],
-            to   : 'authenticated-user'
-        }
-    ])
+    // @(restrict: [
+    //     {
+    //         grant: '*',
+    //         to   : 'admin'
+    //     },
+    //     {
+    //         grant: [
+    //             'READ',
+    //             'CREATE'
+    //         ],
+    //         to   : 'authenticated-user'
+    //     }
+    // ])
     entity incident   as projection on db.incident actions {
         action completeIncident();
     };
