@@ -9,15 +9,15 @@ const completeIncident = require('./libs/completeIncident.js');
 module.exports = (srv) => {
     const { incident } = srv.entities;
 
-    srv.before('NEW', 'incident', async (req) => {
-        if (req.data.ticketType_code === 'A') {
-            req.data.btpHidden = false
-            req.data.fioriHidden = true
-        } else {
-            req.data.btpHidden = true
-            req.data.fioriHidden = false
-        }
-    })
+    // srv.before('NEW', 'incident', async (req) => {
+    //     if (req.data.ticketType_code === 'A') {
+    //         req.data.btpHidden = false
+    //         req.data.fioriHidden = true
+    //     } else {
+    //         req.data.btpHidden = true
+    //         req.data.fioriHidden = false
+    //     }
+    // })
 
     srv.before('CREATE', 'incident', async (req) => {
         await insertDefaultValues(req,incident)

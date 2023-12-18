@@ -16,12 +16,12 @@ entity incident : cuid, managed {
     // roleCollections : String;            //Not needed, configurations right will not be granted!
     targetid    : Association to btpUser;
     note        : String; //Enter reason here, based on reason admin will determine space to grant access to; Multiline
-    //Fiori app enablement
-    system      : String(3);
-    client      : String(3);
-    //Config values
-    btpHidden   : Boolean;
-    fioriHidden : Boolean;
+    // //Fiori app enablement
+    // system      : String(3);
+    // client      : String(3);
+    // //Config values
+    // btpHidden   : Boolean;
+    // fioriHidden : Boolean;
 }
 
 // entity ppgUsers {

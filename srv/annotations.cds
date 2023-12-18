@@ -9,23 +9,6 @@ annotate main.incident with {
                @readonly;
     approverid @title           : '{i18n>approverid}'
                @readonly;
-    @Core.Immutable  : true
-    @Common.ValueList: {
-        $Type         : 'Common.ValueListType',
-        Label         : 'Ticket Type',
-        CollectionPath: 'ticketType',
-        Parameters    : [
-            {
-                $Type            : 'Common.ValueListParameterInOut',
-                LocalDataProperty: 'ticketType_code',
-                ValueListProperty: 'code',
-            },
-            {
-                $Type            : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty: 'description',
-            }
-        ]
-    }
     @Common          : {
         Text           : ticketType.description,
         TextArrangement: #TextOnly
@@ -94,13 +77,14 @@ annotate main.incident with {
     //     Text           : targetid.fullName,
     //     TextArrangement: #TextLast
     // }
-    targetid   @title           : '{i18n>targetid}';
+    targetid   @title           : '{i18n>targetid}'
+               @mandatory       : true;
     note       @title           : '{i18n>note}'
                @UI.MultiLineText: true
                @UI.Placeholder  : '{i18n>notePlaceHolder}'
-               @mandatory       : fioriHidden; //Fiori hidden = true = BTP display = Note must be mandatory
-    system     @title           : '{i18n>system}';
-    client     @title           : '{i18n>client}';
+               @mandatory       : true;//fioriHidden; //Fiori hidden = true = BTP display = Note must be mandatory
+    // system     @title           : '{i18n>system}';
+    // client     @title           : '{i18n>client}';
     createdBy  @title           : '{i18n>CreatedBy}';
     createdAt  @title           : '{i18n>CreatedAt}';
     modifiedBy @title           : '{i18n>ModifiedBy}';
@@ -129,14 +113,14 @@ annotate main.incident with
             $Type        : 'UI.ReferenceFacet',
             Label        : '{i18n>BTPDetails}',
             Target       : '@UI.FieldGroup#BTPDetails',
-            ![@UI.Hidden]: btpHidden
+            // ![@UI.Hidden]: btpHidden
         },
-        {
-            $Type        : 'UI.ReferenceFacet',
-            Label        : '{i18n>FioriDetails}',
-            Target       : '@UI.FieldGroup#FioriDetails',
-            ![@UI.Hidden]: fioriHidden,
-        },
+        // {
+        //     $Type        : 'UI.ReferenceFacet',
+        //     Label        : '{i18n>FioriDetails}',
+        //     Target       : '@UI.FieldGroup#FioriDetails',
+        //     ![@UI.Hidden]: fioriHidden,
+        // },
         {
             $Type : 'UI.ReferenceFacet',
             Label : '{i18n>AdminDetails}',
@@ -151,10 +135,10 @@ annotate main.incident with
         {Value: note, }
     ]},
 
-    FieldGroup #FioriDetails: {Data: [
-        {Value: system},
-        {Value: client}
-    ]},
+    // FieldGroup #FioriDetails: {Data: [
+    //     {Value: system},
+    //     {Value: client}
+    // ]},
 
     FieldGroup #Admin       : {Data: [
         {Value: ID},
